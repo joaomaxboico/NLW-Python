@@ -4,6 +4,7 @@ from sqlite3 import Connection
 class EmailsToInviteRepository:
     def __init__(self, conn: Connection) -> None:
         self.__conn = conn
+        
     def registry_email(self, email_infos: Dict) -> None:
         cursor = self.__conn.cursor()
         cursor.execute(

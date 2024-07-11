@@ -4,12 +4,13 @@ from sqlite3 import Connection
 class ActivitiesRepository:
     def __init__(self, conn: Connection) -> None:
         self.__conn = conn
+        
     def registry_activity(self, activity_infos: Dict) -> None:
         cursor = self.__conn.cursor()
         cursor.execute(
             '''
                 INSERT INTO activities 
-                    (id, trip_id, email, title, occurs_at)
+                    (id, trip_id, title, occurs_at)
                 VALUES
                     (?, ?, ?, ?)
             ''', (
@@ -21,7 +22,7 @@ class ActivitiesRepository:
         )
         self.__conn.commit()
         
-    def activities_from_trip(self, trip_id: str) -> List[Tuple]:
+    def find_activities_from_trip(self, trip_id: str) -> List[Tuple]:
         cursor = self.__conn.cursor()
         cursor.execute(
             '''SELECT * FROM activities WHERE trip_id = ?''', (trip_id,)
